@@ -1,3 +1,5 @@
+import { useReducer } from 'react';
+
 import {
     UPDATE_PRODUCTS,
     UPDATE_CATEGORIES,
@@ -15,9 +17,29 @@ export const reducer = (state, action) => {
           ...state,
           products: [...action.products],
         };
-  
+
+      // if action type value is the value of `UPDATE_CATEGORIES`, return a new state object with an updated categories array
+      case UPDATE_CATEGORIES:
+        return {
+          ...state,
+          categories: [...action.categories]
+        };
+      
+      case UPDATE_CURRENT_CATEGORY:
+        return {
+          ...state,
+          currentCategory: action.currentCategory
+        };
+
       // if it's none of these actions, do not update state at all and keep things the same!
       default:
         return state;
     }
   };
+
+  //this fxn will be used to help initalize our global state obj and 
+  //then provide us with fxnality for updating that state by auto running it thru reducer() fxnality
+  //its a more in-depth way of using the useState() Hook
+  export function useProductReducer(initialState) {
+    return useReducer(reducer, initialState);
+  }
