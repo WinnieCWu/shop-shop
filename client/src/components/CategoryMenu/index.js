@@ -3,13 +3,14 @@ import { useQuery } from '@apollo/client';
 import { useStoreContext } from "../../utils/GlobalState";
 import { QUERY_CATEGORIES } from '../../utils/queries';
 import { UPDATE_CATEGORIES, UPDATE_CURRENT_CATEGORY } from '../../utils/actions';
+import { idbPromise } from '../../utils/helpers';
 
 function CategoryMenu({ setCategory }) {
   const [state, dispatch] = useStoreContext();
   // const categories = categoryData?.categories || [];
   //destructure categories out of state to use for our returning JSX
   const { categories } = state;
-  const { data: categoryData } = useQuery(QUERY_CATEGORIES);
+  const { loading, data: categoryData } = useQuery(QUERY_CATEGORIES);
 
   //use React useEffect() Hook to have data in state (take categoryData that returns from useQuery Hook)
   useEffect(() => {
@@ -19,6 +20,16 @@ function CategoryMenu({ setCategory }) {
       dispatch({
         type: UPDATE_CATEGORIES,
         categories: categoryData.categories
+      });
+      categoryData.categories.forEach(category => {
+        idbPromise('categories', 'put', category);
+      });
+    } else if (!loading) {
+      idbPromise('categories', 'get').then(categories => {
+        dispatch({
+          type: UPDATE_CATEGORIES,
+          categories: categories
+        });
       });
     }
   }, [categoryData, dispatch]);
