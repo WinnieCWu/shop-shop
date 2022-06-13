@@ -3,6 +3,7 @@ import ProductList from "../components/ProductList";
 import CategoryMenu from "../components/CategoryMenu";
 import Cart from '../components/Cart';
 
+
 const Home = () => {
   // const [currentCategory, setCategory] = useState("");
     //above code unneeded since state is globally managed now
