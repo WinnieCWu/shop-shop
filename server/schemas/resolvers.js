@@ -55,9 +55,10 @@ const resolvers = {
     checkout: async (parent, args, context) => {
       //pass this array of product id into new instance of Order Mongoose model, for fully populated product objects
       const order = new Order({ products: args.products });
-      const { products } = await order.populate('products');
       const url = new URL(context.headers.referer).origin;
       const line_items = [];
+
+      const { products } = await order.populate('products');
       //loops over products from Order model and pushes a price ID for each new line_item array
       for (let i = 0; i < products.length; i++) {
         // generate product id
