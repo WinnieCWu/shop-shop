@@ -1,7 +1,7 @@
 # shop-shop
 
 ## What it is 
-Shop-Shop is an e-ecommerce app that allows shoopers to browse through the shop and purchase items that they like. 
+Shop-Shop is an e-commerce app that allows shoopers to browse through the shop and purchase items that they like. 
 
 ## Technologies used
 This app uses React to build the client side and the Apollo Server to run the back-end. This app also uses IndexedDB to allow for persistence of items in the shopping cart. 
